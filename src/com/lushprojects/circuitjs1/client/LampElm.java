@@ -60,7 +60,7 @@ package com.lushprojects.circuitjs1.client;
 	    resistance = 100;
 	}
 	final int filament_len = 24;
-	void setPoints() {
+	public void setPoints() {
 	    super.setPoints();
 	    int llen = 16;
 	    calcLeads(llen);

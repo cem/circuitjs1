@@ -51,7 +51,7 @@ package com.lushprojects.circuitjs1.client;
 	    return super.dump() + " " + hiV + " " + loV;
 	}
 	int getPostCount() { return 1; }
-	void setPoints() {
+	public void setPoints() {
 	    super.setPoints();
 	    lead1 = interpPoint(point1, point2, 1-12/dn);
 	}
@@ -126,7 +126,7 @@ package com.lushprojects.circuitjs1.client;
 		    flags &= ~FLAG_NUMERIC;
 	    }
 	}
-	int getShortcut() { return 'i'; }
+	public int getShortcut() { return 'i'; }
 	
 	double getCurrentIntoNode(int n) {
 	    return -current;

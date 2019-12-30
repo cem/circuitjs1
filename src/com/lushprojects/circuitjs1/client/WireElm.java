@@ -90,5 +90,5 @@ package com.lushprojects.circuitjs1.client;
 		    flags &= ~FLAG_SHOWVOLTAGE;
 	    }
 	}
-        int getShortcut() { return 'w'; }
+	public int getShortcut() { return 'w'; }
     }

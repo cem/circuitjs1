@@ -46,7 +46,7 @@ package com.lushprojects.circuitjs1.client;
 	boolean isTernary() { return (flags & FLAG_TERNARY) != 0; }
 	boolean isNumeric() { return (flags & (FLAG_TERNARY|FLAG_NUMERIC)) != 0; }
 	boolean needsPullDown() { return (flags & FLAG_PULLDOWN) != 0; }
-	void setPoints() {
+	public void setPoints() {
 	    super.setPoints();
 	    lead1 = interpPoint(point1, point2, 1-12/dn);
 	}
@@ -117,7 +117,7 @@ package com.lushprojects.circuitjs1.client;
 		    flags &= ~FLAG_NUMERIC;
 	    }
 	}
-	int getShortcut() { return 'o'; }
+	public int getShortcut() { return 'o'; }
 	
 //    void drawHandles(Graphics g, Color c) {
 //    	g.setColor(c);

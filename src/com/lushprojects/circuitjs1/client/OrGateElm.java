@@ -26,7 +26,7 @@ package com.lushprojects.circuitjs1.client;
 	    super(xa, ya, xb, yb, f, st);
 	}
 	String getGateName() { return "OR gate"; }
-	void setPoints() {
+	public void setPoints() {
 	    super.setPoints();
 
 	    if (useEuroGates()) {
@@ -75,5 +75,5 @@ package com.lushprojects.circuitjs1.client;
 	    return f;
 	}
 	int getDumpType() { return 152; }
-	int getShortcut() { return '3'; }
+	public int getShortcut() { return '3'; }
     }

@@ -38,7 +38,7 @@ package com.lushprojects.circuitjs1.client;
 	    if (lastSchmitt)
 		flags |= FLAG_SCHMITT;
 	    
-	    setSize(sim.smallGridCheckItem.getState() ? 1 : 2);
+	    setSize(sim.topMenu != null && sim.topMenu.smallGridCheckItem.getState() ? 1 : 2);
 	}
 	public GateElm(int xa, int ya, int xb, int yb, int f,
 			StringTokenizer st) {
@@ -69,7 +69,7 @@ package com.lushprojects.circuitjs1.client;
 	Point inPosts[], inGates[];
 	boolean inputStates[];
 	int ww;
-	void setPoints() {
+	public void setPoints() {
 	    super.setPoints();
 	    inputStates = new boolean[inputCount];
 	    if (dn > 150 && this == sim.dragElm)
@@ -107,7 +107,7 @@ package com.lushprojects.circuitjs1.client;
 	}
 
 	String getGateText() { return null; }
-	static boolean useEuroGates() { return sim.euroGatesCheckItem.getState(); }
+	static boolean useEuroGates() { return sim.topMenu.euroGatesCheckItem.getState(); }
 	
 	void draw(Graphics g) {
 	    int i;

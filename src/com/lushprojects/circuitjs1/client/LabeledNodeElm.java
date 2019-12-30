@@ -61,7 +61,7 @@ class LabeledNodeElm extends CircuitElm {
 	nodeList = new HashMap<String,Integer>();
     }
     final int circleSize = 17;
-    void setPoints() {
+    public void setPoints() {
 	super.setPoints();
 	lead1 = interpPoint(point1, point2, 1-circleSize/dn);
     }

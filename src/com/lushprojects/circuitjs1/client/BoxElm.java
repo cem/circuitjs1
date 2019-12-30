@@ -78,6 +78,6 @@ class BoxElm extends GraphicElm {
     }
 
     @Override
-    int getShortcut() { return 0; }
+    public int getShortcut() { return 0; }
 }
 

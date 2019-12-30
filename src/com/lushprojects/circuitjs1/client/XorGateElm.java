@@ -35,5 +35,5 @@ package com.lushprojects.circuitjs1.client;
 	    return f;
 	}
 	int getDumpType() { return 154; }
-	int getShortcut() { return '4'; }
+	public int getShortcut() { return '4'; }
     }

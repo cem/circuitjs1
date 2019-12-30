@@ -119,7 +119,7 @@ package com.lushprojects.circuitjs1.client;
 		int segments = 6;
 		int i;
 		setPowerColor(g, true);
-		boolean power = sim.powerCheckItem.getState();
+		boolean power = sim.topMenu.powerCheckItem.getState();
 		double segf = 1./segments;
 		boolean enhancement = vt > 0 && showBulk();
 		for (i = 0; i != segments; i++) {
@@ -221,7 +221,7 @@ package com.lushprojects.circuitjs1.client;
 	Point gate[], body[], pcircle;
 	Polygon arrowPoly;
 	
-	void setPoints() {
+	public void setPoints() {
 	    super.setPoints();
 
 	    // these two flags apply to all mosfets

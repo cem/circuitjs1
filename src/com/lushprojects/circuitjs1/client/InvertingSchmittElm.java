@@ -80,7 +80,7 @@ package com.lushprojects.circuitjs1.client;
 	Polygon gatePoly;
 	Polygon symbolPoly;
 	Point pcircle;
-	void setPoints() {
+	public void setPoints() {
 	    super.setPoints();
 	    int hs = 16;
 	    int ww = 16;

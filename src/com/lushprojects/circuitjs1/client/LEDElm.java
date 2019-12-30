@@ -55,7 +55,7 @@ package com.lushprojects.circuitjs1.client;
 	}
 
 	Point ledLead1, ledLead2, ledCenter;
-	void setPoints() {
+	public void setPoints() {
 	    super.setPoints();
 	    int cr = 12;
 	    ledLead1  = interpPoint(point1, point2, .5-cr/dn);
@@ -128,7 +128,7 @@ package com.lushprojects.circuitjs1.client;
 		maxBrightnessCurrent = ei.value;
 	    super.setEditValue(n-4, ei);
 	}
-	int getShortcut() { return 'l'; }
+	public int getShortcut() { return 'l'; }
 	
 	void setLastModelName(String n) {
 	    lastLEDModelName = n;

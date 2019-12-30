@@ -89,7 +89,7 @@ class TriacElm extends CircuitElm {
     Polygon arrows[];
     Point plate1[], plate2[];
     
-    void setPoints() {
+    public void setPoints() {
         super.setPoints();
         int dir = 0;
         if (abs(dx) > abs(dy)) {

@@ -58,7 +58,7 @@ package com.lushprojects.circuitjs1.client;
         }
         return "";
     }
-    void setPoints(){
+    public void setPoints(){
         super.setPoints();
         mid = interpPoint(point1,point2,0.6);
         arrowPoly = calcArrow(point1, mid, 14, 7);

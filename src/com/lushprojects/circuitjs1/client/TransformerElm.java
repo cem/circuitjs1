@@ -95,7 +95,7 @@ package com.lushprojects.circuitjs1.client;
 	    setBbox(ptEnds[0], ptEnds[polarity == 1 ? 3 : 1], 0);
 	}
 	
-	void setPoints() {
+	public void setPoints() {
 	    super.setPoints();
 	    point2.y = point1.y;
 	    ptEnds = newPointArray(4);
@@ -270,5 +270,5 @@ package com.lushprojects.circuitjs1.client;
 		setPoints();
 	    }
 	}
-	int getShortcut() { return 'T'; }
+	public int getShortcut() { return 'T'; }
     }

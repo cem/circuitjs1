@@ -19,7 +19,7 @@ public class PolarCapacitorElm extends CapacitorElm {
 	
 	Point plusPoint;
 	
-	void setPoints() {
+	public void setPoints() {
 	    super.setPoints();
 	    double f = (dn/2-4)/dn;
 	    int i;
@@ -61,5 +61,5 @@ public class PolarCapacitorElm extends CapacitorElm {
 	    if (getVoltageDiff() < 0 && getVoltageDiff() < -maxNegativeVoltage)
 		sim.stop("capacitor exceeded max reverse voltage", this);
 	}
-	int getShortcut() { return 'C'; }
+	public int getShortcut() { return 'C'; }
 }

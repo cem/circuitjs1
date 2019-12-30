@@ -70,7 +70,7 @@ public class AudioOutputElm extends CircuitElm {
 	    nextDataSample = 0;
 	    dataSample = 0;
 	}
-	void setPoints() {
+	public void setPoints() {
 	    super.setPoints();
 	    lead1 = new Point();
 	}
@@ -209,7 +209,7 @@ public class AudioOutputElm extends CircuitElm {
             });
             
         }
-        void delete() {
+        public void delete() {
             sim.removeWidgetFromVerticalPanel(button);
             super.delete();
         }

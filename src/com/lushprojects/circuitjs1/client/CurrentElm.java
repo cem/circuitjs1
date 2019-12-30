@@ -41,7 +41,7 @@ package com.lushprojects.circuitjs1.client;
 	
 	Polygon arrow;
 	Point ashaft1, ashaft2, center;
-	void setPoints() {
+	public void setPoints() {
 	    super.setPoints();
 	    calcLeads(26);
 	    ashaft1 = interpPoint(lead1, lead2, .25);
@@ -62,7 +62,7 @@ package com.lushprojects.circuitjs1.client;
 	    g.fillPolygon(arrow);
 	    setBbox(point1, point2, cr);
 	    doDots(g);
-	    if (sim.showValuesCheckItem.getState()) {
+	    if (sim.topMenu.showValuesCheckItem.getState()) {
 		String s = getShortUnitText(currentValue, "A");
 		if (dx == 0 || dy == 0)
 		    drawValues(g, s, cr);

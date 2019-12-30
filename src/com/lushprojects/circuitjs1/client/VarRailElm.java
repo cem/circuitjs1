@@ -59,7 +59,7 @@ import com.google.gwt.event.dom.client.MouseWheelHandler;
 	    frequency = slider.getValue() * (maxVoltage-bias) / 100. + bias;
 	    return frequency;
 	}
-	void delete() {
+	public void delete() {
 	    sim.removeWidgetFromVerticalPanel(label);
 	    sim.removeWidgetFromVerticalPanel(slider);
             super.delete();
@@ -87,7 +87,7 @@ import com.google.gwt.event.dom.client.MouseWheelHandler;
 		sim.setiFrameHeight();
 	    }
 	}
-	int getShortcut() { return 0; }
+	public int getShortcut() { return 0; }
 	
     void setMouseElm(boolean v) {
     	super.setMouseElm(v);

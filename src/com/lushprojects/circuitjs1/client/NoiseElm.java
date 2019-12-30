@@ -29,5 +29,5 @@ package com.lushprojects.circuitjs1.client;
 	
 	// dump this class as a RailElm.  The 'n' dump type is still used in CirSim.createCe to read old files
 //	int getDumpType() { return 'n'; }
-	int getShortcut() { return 0; }
+	public int getShortcut() { return 0; }
     }

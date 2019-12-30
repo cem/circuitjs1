@@ -40,7 +40,7 @@ package com.lushprojects.circuitjs1.client;
 	String dump() {
 	    return super.dump() + " " + inductance + " " + current;
 	}
-	void setPoints() {
+	public void setPoints() {
 	    super.setPoints();
 	    calcLeads(32);
 	}
@@ -53,7 +53,7 @@ package com.lushprojects.circuitjs1.client;
 	    draw2Leads(g);
 	    setPowerColor(g, false);
 	    drawCoil(g, 8, lead1, lead2, v1, v2);
-	    if (sim.showValuesCheckItem.getState()) {
+	    if (sim.topMenu.showValuesCheckItem.getState()) {
 		String s = getShortUnitText(inductance, "H");
 		drawValues(g, s, hs);
 	    }
@@ -107,6 +107,6 @@ package com.lushprojects.circuitjs1.client;
 	    ind.setup(inductance, current, flags);
 	}
 	
-	int getShortcut() { return 'L'; }
+	public int getShortcut() { return 'L'; }
 	
     }

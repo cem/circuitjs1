@@ -33,7 +33,7 @@ package com.lushprojects.circuitjs1.client;
 	    maxOut = 15;
 	    minOut = -15;
 	    gbw = 1e6;
-	    setSize(sim.smallGridCheckItem.getState() ? 1 : 2);
+	    setSize(sim.topMenu != null && sim.topMenu.smallGridCheckItem.getState() ? 1 : 2);
 	    flags = FLAG_GAIN;
 	    gain = 100000;
 	}
@@ -99,7 +99,7 @@ package com.lushprojects.circuitjs1.client;
 	    opwidth = 13*s;
 	    flags = (flags & ~FLAG_SMALL) | ((s == 1) ? FLAG_SMALL : 0);
 	}
-	void setPoints() {
+	public void setPoints() {
 	    super.setPoints();
 	    if (dn > 150 && this == sim.dragElm)
 		setSize(2);
@@ -200,7 +200,7 @@ package com.lushprojects.circuitjs1.client;
 	    if (n == 2 && ei.value > 0)
 		gain = ei.value;
 	}
-	int getShortcut() { return 'a'; }
+	public int getShortcut() { return 'a'; }
 	
 	@Override double getCurrentIntoNode(int n) { 
 	    if (n==2)

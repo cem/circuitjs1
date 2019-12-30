@@ -75,7 +75,7 @@ class SchmittElm extends InvertingSchmittElm{
 	    curcount = updateDotCount(current, curcount);
 	    drawDots(g, lead2, point2, curcount);
 	}
-	void setPoints() {
+	public void setPoints() {
 	    super.setPoints();
 	    int hs = 16;
 	    int ww = 16;

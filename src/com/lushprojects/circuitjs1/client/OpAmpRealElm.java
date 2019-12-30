@@ -159,7 +159,7 @@ public class OpAmpRealElm extends CompositeElm {
     Polygon triangle;
     Font plusFont;
 
-    void setPoints() {
+    public void setPoints() {
         super.setPoints();
         int ww = opwidth;
         if (ww > dn/2)

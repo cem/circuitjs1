@@ -88,7 +88,7 @@ public class OptocouplerElm extends CompositeElm {
 
     Point stubs[];
     
-    void setPoints() {
+    public void setPoints() {
 	super.setPoints();
 	
 	// adapted from ChipElm

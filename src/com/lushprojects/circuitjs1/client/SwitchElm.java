@@ -55,7 +55,7 @@ class SwitchElm extends CircuitElm {
     }
 
     Point ps, ps2;
-    void setPoints() {
+    public void setPoints() {
 	super.setPoints();
 	calcLeads(32);
 	ps  = new Point();
@@ -134,5 +134,5 @@ class SwitchElm extends CircuitElm {
 	if (n == 0)
 	    momentary = ei.checkbox.getState();
     }
-    int getShortcut() { return 's'; }
+    public int getShortcut() { return 's'; }
 }

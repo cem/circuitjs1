@@ -51,7 +51,7 @@ class TriodeElm extends CircuitElm {
 	
     Point plate[], grid[], cath[], midgrid, midcath;
     int circler;
-    void setPoints() {
+    public void setPoints() {
 	super.setPoints();
 	plate = newPointArray(4);
 	grid  = newPointArray(8);

@@ -60,7 +60,7 @@ class TestPointElm extends CircuitElm {
     }
     int getDumpType() { return 368; }
     int getPostCount() { return 1; }
-    void setPoints() {
+    public void setPoints() {
         super.setPoints();
         lead1 = new Point();
     }

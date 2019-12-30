@@ -28,5 +28,5 @@ class ClockElm extends RailElm {
 	    flags |= FLAG_CLOCK;
 	}
 	Class getDumpClass() { return RailElm.class; }
-	int getShortcut() { return 0; }
+	public int getShortcut() { return 0; }
     }

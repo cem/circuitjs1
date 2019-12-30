@@ -167,6 +167,6 @@ class TextElm extends GraphicElm {
 	arr[0] = text;
     }
     @Override
-    int getShortcut() { return 't'; }
+    public int getShortcut() { return 't'; }
 }
 

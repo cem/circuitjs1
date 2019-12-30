@@ -10,7 +10,7 @@ public class OhmMeterElm extends CurrentElm {
 	}
 	int getDumpType() { return 216; }
 
-	void setPoints() {
+	public void setPoints() {
 	    super.setPoints();
 	    calcLeads(26);
 	}
@@ -25,7 +25,7 @@ public class OhmMeterElm extends CurrentElm {
 
 	    setBbox(point1, point2, cr);
 	    doDots(g);
-	    if (sim.showValuesCheckItem.getState() && current != 0) {
+	    if (sim.topMenu.showValuesCheckItem.getState() && current != 0) {
 		String s = getShortUnitText(getVoltageDiff()/current, sim.ohmString);
 		if (dx == 0 || dy == 0)
 		    drawValues(g, s, cr);

@@ -30,7 +30,7 @@ class AnalogSwitch2Elm extends AnalogSwitchElm {
 
     final int openhs = 16;
     Point swposts[], swpoles[], ctlPoint;
-    void setPoints() {
+    public void setPoints() {
 	super.setPoints();
 	calcLeads(32);
 	swposts = newPointArray(2);

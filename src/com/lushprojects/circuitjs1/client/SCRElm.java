@@ -88,7 +88,7 @@ class SCRElm extends CircuitElm {
 	
     boolean applyGateFix() { return (flags & FLAG_GATE_FIX) != 0; }
     
-    void setPoints() {
+    public void setPoints() {
 	super.setPoints();
 	int dir = 0;
 	if (abs(dx) > abs(dy)) {

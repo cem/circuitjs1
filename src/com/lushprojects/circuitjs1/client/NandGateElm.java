@@ -28,5 +28,5 @@ package com.lushprojects.circuitjs1.client;
 	boolean isInverting() { return true; }
 	String getGateName() { return "NAND gate"; }
 	int getDumpType() { return 151; }
-	int getShortcut() { return '@'; }
+	public int getShortcut() { return '@'; }
     }

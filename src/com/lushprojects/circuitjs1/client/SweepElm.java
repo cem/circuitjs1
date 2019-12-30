@@ -48,7 +48,7 @@ class SweepElm extends CircuitElm {
 	return super.dump() + " " + minF + " " + maxF + " " + maxV + " " +
 	    sweepTime;
     }
-    void setPoints() {
+    public void setPoints() {
 	super.setPoints();
 	lead1 = interpPoint(point1, point2, 1-circleSize/dn);
     }
@@ -86,7 +86,7 @@ class SweepElm extends CircuitElm {
 	g.context.stroke();
 	g.context.setLineWidth(1.0);
 
-	if (sim.showValuesCheckItem.getState()) {
+	if (sim.topMenu.showValuesCheckItem.getState()) {
 	    String s = getShortUnitText(frequency, "Hz");
 	    if (dx == 0 || dy == 0)
 		drawValues(g, s, circleSize);

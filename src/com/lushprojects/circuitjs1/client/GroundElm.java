@@ -53,7 +53,7 @@ package com.lushprojects.circuitjs1.client;
 	    arr[1] = "I = " + getCurrentText(getCurrent());
 	}
 	boolean hasGroundConnection(int n1) { return true; }
-	int getShortcut() { return 'g'; }
+	public int getShortcut() { return 'g'; }
 	
 	@Override double getCurrentIntoNode(int n) { return -current; }
     }

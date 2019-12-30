@@ -95,7 +95,7 @@ class ProbeElm extends CircuitElm {
 
     Point center;
 	
-	void setPoints() {
+	public void setPoints() {
 	    super.setPoints();
 	    center = interpPoint(point1, point2, .5);
 	}

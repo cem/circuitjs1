@@ -49,7 +49,7 @@ class ZenerElm extends DiodeElm {
     Point cathode[];
     Point wing[];
 	
-    void setPoints() {
+    public void setPoints() {
 	super.setPoints();
 	calcLeads(16);
 	cathode = newPointArray(2);
@@ -95,7 +95,7 @@ class ZenerElm extends DiodeElm {
 	arr[5] = "Vz = " + getVoltageText(model.breakdownVoltage);
     }
     
-    int getShortcut() { return 'z'; }
+    public int getShortcut() { return 'z'; }
     
     void setLastModelName(String n) {
 	lastZenerModelName = n;

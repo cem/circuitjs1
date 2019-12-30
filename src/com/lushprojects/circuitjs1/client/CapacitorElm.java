@@ -52,7 +52,7 @@ package com.lushprojects.circuitjs1.client;
 	
 	Point platePoints[];
 	
-	void setPoints() {
+	public void setPoints() {
 	    super.setPoints();
 	    double f = (dn/2-4)/dn;
 	    // calc leads
@@ -74,7 +74,7 @@ package com.lushprojects.circuitjs1.client;
 	    drawThickLine(g, point1, lead1);
 	    setPowerColor(g, false);
 	    drawThickLine(g, plate1[0], plate1[1]);
-	    if (sim.powerCheckItem.getState())
+	    if (sim.topMenu.powerCheckItem.getState())
 		g.setColor(Color.gray);
 
 	    // draw second lead and plate
@@ -95,7 +95,7 @@ package com.lushprojects.circuitjs1.client;
 		drawDots(g, point2, lead2, -curcount);
 	    }
 	    drawPosts(g);
-	    if (sim.showValuesCheckItem.getState()) {
+	    if (sim.topMenu.showValuesCheckItem.getState()) {
 		String s = getShortUnitText(capacitance, "F");
 		drawValues(g, s, hs);
 	    }
@@ -177,5 +177,5 @@ package com.lushprojects.circuitjs1.client;
 		    flags |= FLAG_BACK_EULER;
 	    }
 	}
-	int getShortcut() { return 'c'; }
+	public int getShortcut() { return 'c'; }
     }

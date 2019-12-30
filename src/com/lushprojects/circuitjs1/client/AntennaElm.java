@@ -41,7 +41,7 @@ package com.lushprojects.circuitjs1.client;
 	}
 	
 	int getDumpType() { return 'A'; }
-	int getShortcut() { return 0; }
+	public int getShortcut() { return 0; }
 	
 	public EditInfo getEditInfo(int n) {
 	    return null;

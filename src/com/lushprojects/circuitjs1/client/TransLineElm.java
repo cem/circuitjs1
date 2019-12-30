@@ -79,7 +79,7 @@ class TransLineElm extends CircuitElm {
 	ptr = 0;
 	super.reset();
     }
-    void setPoints() {
+    public void setPoints() {
 	super.setPoints();
 	int ds = (dy == 0) ? sign(dx) : -sign(dy);
 	Point p3 = interpPoint(point1, point2, 0, -width*ds);

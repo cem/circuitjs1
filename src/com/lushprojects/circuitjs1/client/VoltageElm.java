@@ -137,7 +137,7 @@ class VoltageElm extends CircuitElm {
 	}
     }
     final int circleSize = 17;
-    void setPoints() {
+    public void setPoints() {
 	super.setPoints();
 	calcLeads((waveform == WF_DC || waveform == WF_VAR) ? 8 : circleSize*2);
     }
@@ -252,7 +252,7 @@ class VoltageElm extends CircuitElm {
 	    break;
 	}
 	}
-	if (sim.showValuesCheckItem.getState() && waveform != WF_NOISE) {
+	if (sim.topMenu.showValuesCheckItem.getState() && waveform != WF_NOISE) {
 	    String s = getShortUnitText(frequency, "Hz");
 	    if (dx == 0 || dy == 0)
 		drawValues(g, s, circleSize);

@@ -58,7 +58,7 @@ class TriStateElm extends CircuitElm {
 
     Polygon gatePoly;
 
-    void setPoints() {
+    public void setPoints() {
 	super.setPoints();
 	calcLeads(32);
 	ps = new Point();

@@ -38,7 +38,7 @@ class TunnelDiodeElm extends CircuitElm {
     Polygon poly;
     Point cathode[];
 	
-    void setPoints() {
+    public void setPoints() {
 	super.setPoints();
 	calcLeads(16);
 	cathode = newPointArray(4);

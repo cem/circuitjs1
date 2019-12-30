@@ -28,7 +28,7 @@ package com.lushprojects.circuitjs1.client;
 	}
 	int getDumpType() { return 'O'; }
 	int getPostCount() { return 1; }
-	void setPoints() {
+	public void setPoints() {
 	    super.setPoints();
 	    lead1 = new Point();
 	}

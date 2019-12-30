@@ -16,7 +16,7 @@ public class ComparatorElm extends CompositeElm {
     public ComparatorElm(int xx, int yy) {
 	super(xx, yy, modelString, modelExternalNodes);
 	noDiagonal = true;
-	setSize(sim.smallGridCheckItem.getState() ? 1 : 2);
+	setSize(sim.topMenu != null && sim.topMenu.smallGridCheckItem.getState() ? 1 : 2);
     }
     
 
@@ -59,7 +59,7 @@ public class ComparatorElm extends CompositeElm {
 	    drawPosts(g);
 	}
 
-	void setPoints() {
+	public void setPoints() {
 	    super.setPoints();
 	    if (dn > 150 && this == sim.dragElm)
 		setSize(2);

@@ -63,7 +63,7 @@ package com.lushprojects.circuitjs1.client;
 	}
 	Polygon gatePoly;
 	Point pcircle;
-	void setPoints() {
+	public void setPoints() {
 	    super.setPoints();
 	    int hs = 16;
 	    int ww = 16;
@@ -124,7 +124,7 @@ package com.lushprojects.circuitjs1.client;
 	boolean hasGroundConnection(int n1) {
 	    return (n1 == 1);
 	}
-	int getShortcut() { return '1'; }
+	public int getShortcut() { return '1'; }
 	
 	@Override double getCurrentIntoNode(int n) {
 	    if (n == 1)

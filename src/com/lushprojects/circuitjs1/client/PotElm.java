@@ -80,7 +80,7 @@ class PotElm extends CircuitElm implements Command, MouseWheelHandler {
 	setPoints();
     }
     
-    void delete() {
+    public void delete() {
 	sim.removeWidgetFromVerticalPanel(label);
 	sim.removeWidgetFromVerticalPanel(slider);
         super.delete();
@@ -90,7 +90,7 @@ class PotElm extends CircuitElm implements Command, MouseWheelHandler {
     Point ps3, ps4;
     int bodyLen;
     
-    void setPoints() {
+    public void setPoints() {
 	super.setPoints();
 	int offset = 0;
 	int myLen =0;
@@ -145,7 +145,7 @@ class PotElm extends CircuitElm implements Command, MouseWheelHandler {
 	int segments = 16;
 	int i;
 	int ox = 0;
-	int hs = sim.euroResistorCheckItem.getState() ? 6 : 8;
+	int hs = sim.topMenu.euroResistorCheckItem.getState() ? 6 : 8;
 	double v1 = volts[0];
 	double v2 = volts[1];
 	double v3 = volts[2];
@@ -154,7 +154,7 @@ class PotElm extends CircuitElm implements Command, MouseWheelHandler {
 	setPowerColor(g, true);
 	double segf = 1./segments;
 	int divide = (int) (segments*position);
-	if (!sim.euroResistorCheckItem.getState()) {
+	if (!sim.topMenu.euroResistorCheckItem.getState()) {
 	    // draw zigzag
 	    for (i = 0; i != segments; i++) {
 		int nx = 0;
@@ -207,7 +207,7 @@ class PotElm extends CircuitElm implements Command, MouseWheelHandler {
 	}
 	drawPosts(g);
 
-	if (sim.showValuesCheckItem.getState() && resistance1 > 0 && (flags & FLAG_SHOW_VALUES) != 0) {
+	if (sim.topMenu.showValuesCheckItem.getState() && resistance1 > 0 && (flags & FLAG_SHOW_VALUES) != 0) {
 	    // check for vertical pot with 3rd terminal on left
 	    boolean reverseY = (post3.x < lead1.x && lead1.x == lead2.x);
 	    // check for horizontal pot with 3rd terminal on top

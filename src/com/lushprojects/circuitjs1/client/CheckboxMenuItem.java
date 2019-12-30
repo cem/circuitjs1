@@ -27,7 +27,7 @@ public class CheckboxMenuItem extends MenuItem implements Command {
 	private String name="";
 	private String shortcut="";
 	private Command extcmd=null;
-	static String checkBoxHtml="<div style=\"display:inline-block;width:15px;\">";
+	public static String checkBoxHtml="<div style=\"display:inline-block;width:15px;\">";
 
 	public String getName() { return name; }
 	public String getShortcut() { return shortcut; }

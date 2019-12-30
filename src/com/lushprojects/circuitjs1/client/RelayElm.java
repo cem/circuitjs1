@@ -164,7 +164,7 @@ class RelayElm extends CircuitElm {
 	return coilCurrent;
     }
 
-    void setPoints() {
+    public void setPoints() {
 	super.setPoints();
 	setupPoles();
 	allocNodes();
@@ -339,6 +339,6 @@ class RelayElm extends CircuitElm {
     boolean getConnection(int n1, int n2) {
 	return (n1 / 3 == n2 / 3);
     }
-    int getShortcut() { return 'R'; }
+    public int getShortcut() { return 'R'; }
 }
     

@@ -124,13 +124,13 @@ class ScopePlot {
 	    color = "#FFFF00";
 	    break;
 	default:
-	    color = (CirSim.theSim.printableCheckItem.getState()) ? "#000000" : "#FFFFFF";
+	    color = (CirSim.theSim.topMenu.printableCheckItem.getState()) ? "#000000" : "#FFFFFF";
 	    break;
 	}
     }
 }
 
-class Scope {
+public class Scope {
     final int FLAG_YELM = 32;
     // bunch of other flags go here, see dump()
     final int FLAG_IVALUE = 2048; // Flag to indicate if IVALUE is included in dump
@@ -158,7 +158,7 @@ class Scope {
     int speed;
     int stackCount; // number of scopes in this column
     String text;
-    Rectangle rect;
+    public Rectangle rect;
     boolean showI, showV, showScale, showMax, showMin, showFreq, lockScale, plot2d, plotXY, maxScale;
     boolean showFFT, showNegative, showRMS, showDutyCycle;
     Vector<ScopePlot> plots, visiblePlots;
@@ -282,7 +282,7 @@ class Scope {
     	}
     }
     
-    void setRect(Rectangle r) {
+    public void setRect(Rectangle r) {
 	int w = this.rect.width;
 	this.rect = r;
 	if (this.rect.width != w)
@@ -434,7 +434,7 @@ class Scope {
     		draw_ox = x2;
     		draw_oy = y2;
     	}
-		if (sim.printableCheckItem.getState()) {
+		if (sim.topMenu.printableCheckItem.getState()) {
 			imageContext.setStrokeStyle("#000000");
 		} else {
 			imageContext.setStrokeStyle("#ffffff");
@@ -449,7 +449,7 @@ class Scope {
 	
     void clear2dView() {
     	if (imageContext!=null) {
-    		if (sim.printableCheckItem.getState()) {
+    		if (sim.topMenu.printableCheckItem.getState()) {
     			imageContext.setFillStyle("#ffffff");
     		} else {
     			imageContext.setFillStyle("#000000");
@@ -586,7 +586,7 @@ class Scope {
     	if (alphadiv>2) {
     		alphadiv=0;
     		imageContext.setGlobalAlpha(0.01);
-    		if (sim.printableCheckItem.getState()) {
+    		if (sim.topMenu.printableCheckItem.getState()) {
     			imageContext.setFillStyle("#ffffff");
     		} else {
     			imageContext.setFillStyle("#000000");
@@ -845,7 +845,7 @@ class Scope {
     	int ll;
     	String minorDiv = "#303030";
     	String majorDiv = "#A0A0A0";
-    	if (sim.printableCheckItem.getState()) {
+    	if (sim.topMenu.printableCheckItem.getState()) {
     	    minorDiv = "#D0D0D0";
     	    majorDiv = "#808080";
     	    curColor = "#A0A000";
@@ -996,7 +996,7 @@ class Scope {
 	g.setColor(CircuitElm.whiteColor);
 	g.drawLine(sim.mouseCursorX, rect.y, sim.mouseCursorX, rect.y+rect.height);
 	//	    g.drawLine(rect.x, sim.mouseCursorY, rect.x+rect.width, sim.mouseCursorY);
-	g.setColor(sim.printableCheckItem.getState() ? Color.white : Color.black);
+	g.setColor(sim.topMenu.printableCheckItem.getState() ? Color.white : Color.black);
 	int bx = sim.mouseCursorX;
 	if (bx < szw/2)
 	    bx = szw/2;

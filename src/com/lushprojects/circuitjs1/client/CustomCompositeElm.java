@@ -77,7 +77,7 @@ public class CustomCompositeElm extends CompositeElm {
 	boundingBox = chip.boundingBox;
     }
 
-    void setPoints() {
+    public void setPoints() {
 	chip = new CustomCompositeChipElm(x, y);
 	chip.x2 = x2;
 	chip.y2 = y2;

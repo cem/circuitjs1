@@ -22,6 +22,7 @@ package com.lushprojects.circuitjs1.client;
 import com.google.gwt.canvas.dom.client.CanvasGradient;
 import com.google.gwt.canvas.dom.client.Context2d.LineCap;
 import com.google.gwt.i18n.client.NumberFormat;
+import com.lushprojects.circuitjs1.client.gui.TopMenu;
 
 // circuit element class
 public abstract class CircuitElm implements Editable {
@@ -34,6 +35,7 @@ public abstract class CircuitElm implements Editable {
     static Point ps1, ps2;
     
     static CirSim sim;
+    static TopMenu topMenu;
     static Color whiteColor, selectColor, lightGrayColor;
     static Font unitsFont;
 
@@ -103,9 +105,11 @@ public abstract class CircuitElm implements Editable {
 	showFormat=NumberFormat.getFormat("####.###");
 
 	shortFormat=NumberFormat.getFormat("####.#");
+	
+	topMenu = s.topMenu;
     }
     
-    static void setColorScale() {
+    public static void setColorScale() {
 
 	int i;
 	for (i = 0; i != colorScaleCount; i++) {
@@ -117,7 +121,7 @@ public abstract class CircuitElm implements Editable {
 	    } else {
 		int n1 = (int) (128 * v) + 127;
 		int n2 = (int) (127 * (1 - v));
-		if (sim.alternativeColorCheckItem.getState())
+		if (topMenu.alternativeColorCheckItem.getState())
 		    colorScale[i] = new Color(n2, n2, n1);
 		else
 		    colorScale[i] = new Color(n2, n1, n2);
@@ -187,10 +191,11 @@ public abstract class CircuitElm implements Editable {
     // stamp matrix values for non-linear elements
     void doStep() {}
     
-    void delete() {
+    public void delete() {
 	if (mouseElmRef==this)
 	    mouseElmRef=null;
-	sim.deleteSliders(this);
+	if (sim != null)
+	    sim.deleteSliders(this);
     }
     void startIteration() {}
     
@@ -207,7 +212,7 @@ public abstract class CircuitElm implements Editable {
     void calculateCurrent() {}
     
     // calculate post locations and other convenience values used for drawing.  Called when element is moved 
-    void setPoints() {
+    public void setPoints() {
     	dx = x2-x; dy = y2-y;
     	dn = Math.sqrt(dx*dx+dy*dy);
     	dpx1 = dy/dn;
@@ -312,12 +317,12 @@ public abstract class CircuitElm implements Editable {
 
     // draw current dots from point a to b
     void drawDots(Graphics g, Point pa, Point pb, double pos) {
-	 if ((!sim.simIsRunning()) || pos == 0 || !sim.dotsCheckItem.getState())
+	 if ((!sim.simIsRunning()) || pos == 0 || !sim.topMenu.dotsCheckItem.getState())
 	    return;
 	int dx = pb.x-pa.x;
 	int dy = pb.y-pa.y;
 	double dn = Math.sqrt(dx*dx+dy*dy);
-	g.setColor(sim.conventionCheckItem.getState()?Color.yellow:Color.cyan);
+	g.setColor(sim.topMenu.conventionCheckItem.getState()?Color.yellow:Color.cyan);
 	int ds = 16;
 	pos %= ds;
 	if (pos < 0)
@@ -633,7 +638,7 @@ public abstract class CircuitElm implements Editable {
 	g.context.setLineWidth(3.0);
 	g.context.transform(((double)(p2.x-p1.x))/len, ((double)(p2.y-p1.y))/len,
 		-((double)(p2.y-p1.y))/len,((double)(p2.x-p1.x))/len,p1.x,p1.y);
-	if (sim.voltsCheckItem.getState() ) {
+	if (sim.topMenu.voltsCheckItem.getState() ) {
 	    CanvasGradient grad = g.context.createLinearGradient(0,0,len,0);
 	    grad.addColorStop(0, getVoltageColor(g,v1).getHexValue());
 	    grad.addColorStop(1.0, getVoltageColor(g,v2).getHexValue());
@@ -821,7 +826,7 @@ public abstract class CircuitElm implements Editable {
     	if (needsHighlight()) {
     	    	return (selectColor);
     	}
-    	if (!sim.voltsCheckItem.getState()) {
+    	if (!sim.topMenu.voltsCheckItem.getState()) {
     	    	return(whiteColor);
     	}
     	int c = (int) ((volts+voltageRange)*(colorScaleCount-1)/
@@ -843,13 +848,13 @@ public abstract class CircuitElm implements Editable {
 	  setConductanceColor(g, current/getVoltageDiff());
 	  return;
 	  }*/
-	if (!sim.powerCheckItem.getState() )
+	if (!sim.topMenu.powerCheckItem.getState() )
 	    return;
 	setPowerColor(g, getPower());
     }
     
     void setPowerColor(Graphics g, double w0) {
-	if (!sim.powerCheckItem.getState() )
+	if (!sim.topMenu.powerCheckItem.getState() )
 	    return;
     	if (needsHighlight()) {
 	    	g.setColor(selectColor);
@@ -927,8 +932,8 @@ public abstract class CircuitElm implements Editable {
 	return Math.sqrt(x*x+y*y);
     }
     Rectangle getBoundingBox() { return boundingBox; }
-    boolean needsShortcut() { return getShortcut() > 0; }
-    int getShortcut() { return 0; }
+    public boolean needsShortcut() { return getShortcut() > 0; }
+    public int getShortcut() { return 0; }
 
     boolean isGraphicElmt() { return false; }
     

@@ -81,7 +81,7 @@ package com.lushprojects.circuitjs1.client;
             return -ids;
         }
 	
-	void setPoints() {
+	public void setPoints() {
 	    super.setPoints();
 
 	    // find the coordinates of the various points we need to draw

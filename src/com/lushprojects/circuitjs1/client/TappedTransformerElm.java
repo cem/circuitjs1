@@ -97,7 +97,7 @@ package com.lushprojects.circuitjs1.client;
 	    setBbox(ptEnds[0], ptEnds[4], 0);
 	}
 	
-	void setPoints() {
+	public void setPoints() {
 	    super.setPoints();
 	    int hs = 32;
 	    ptEnds = newPointArray(5);

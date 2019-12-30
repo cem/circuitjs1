@@ -28,7 +28,7 @@ package com.lushprojects.circuitjs1.client;
 	
 	String getGateText() { return "&"; }
 	
-	void setPoints() {
+	public void setPoints() {
 	    super.setPoints();
 	 
 	    if (useEuroGates()) {
@@ -63,5 +63,5 @@ package com.lushprojects.circuitjs1.client;
 	    return f;
 	}
 	int getDumpType() { return 150; }
-	int getShortcut() { return '2'; }
+	public int getShortcut() { return '2'; }
     }

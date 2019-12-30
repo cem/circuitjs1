@@ -53,7 +53,7 @@ package com.lushprojects.circuitjs1.client;
 
 	final int openhs = 16;
 	Point swposts[], swpoles[];
-	void setPoints() {
+	public void setPoints() {
 	    super.setPoints();
 	    calcLeads(32);
 	    swposts = newPointArray(throwCount);
@@ -186,5 +186,5 @@ package com.lushprojects.circuitjs1.client;
 	// this is for backwards compatibility only.  we only support it if throwCount = 2
 	boolean hasCenterOff() { return (flags & FLAG_CENTER_OFF) != 0 && throwCount == 2; }
 	
-	int getShortcut() { return 'S'; }
+	public int getShortcut() { return 'S'; }
     }

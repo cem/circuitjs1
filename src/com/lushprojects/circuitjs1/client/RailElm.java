@@ -41,7 +41,7 @@ class RailElm extends VoltageElm {
     int getDumpType() { return 'R'; }
     int getPostCount() { return 1; }
 	
-    void setPoints() {
+    public void setPoints() {
 	super.setPoints();
 	lead1 = interpPoint(point1, point2, 1-circleSize/dn);
     }
@@ -104,7 +104,7 @@ class RailElm extends VoltageElm {
 	    sim.updateVoltageSource(0, nodes[0], voltSource, getVoltage());
     }
     boolean hasGroundConnection(int n1) { return true; }
-    int getShortcut() { return 'V'; }
+    public int getShortcut() { return 'V'; }
     
 //    void drawHandles(Graphics g, Color c) {
 //    	g.setColor(c);

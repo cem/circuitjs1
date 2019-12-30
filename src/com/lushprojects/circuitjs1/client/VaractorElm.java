@@ -40,7 +40,7 @@ class VaractorElm extends DiodeElm {
     String dump() {
 	return super.dump() + " " + capvoltdiff + " " + baseCapacitance;
     }
-    void setPoints() {
+    public void setPoints() {
 	super.setPoints();
 	double platef = .6;
 	Point pa[] = newPointArray(2);
@@ -64,7 +64,7 @@ class VaractorElm extends DiodeElm {
 	setVoltageColor(g, volts[0]);
 	setPowerColor(g, false);
 	drawThickLine(g, plate1[0], plate1[1]);
-	if (sim.powerCheckItem.getState())
+	if (sim.topMenu.powerCheckItem.getState())
 	    g.setColor(Color.gray);
 
 	// draw second plate
@@ -114,7 +114,7 @@ class VaractorElm extends DiodeElm {
 	super.setEditValue(n,  ei);
     }
 
-    int getShortcut() { return 0; }
+    public int getShortcut() { return 0; }
     void setCurrent(int x, double c) { capCurrent = c; }
     double voltSourceValue;
     int getVoltageSourceCount() { return 1; }

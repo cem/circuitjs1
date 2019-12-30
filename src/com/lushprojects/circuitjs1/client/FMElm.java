@@ -107,7 +107,7 @@ class FMElm extends CircuitElm {
     }
 
 
-  void setPoints() {
+  public void setPoints() {
 	super.setPoints();
 	lead1 = interpPoint(point1, point2, 1-circleSize/dn);
     }

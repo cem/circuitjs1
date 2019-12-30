@@ -88,7 +88,7 @@ public class OTAElm extends CompositeElm {
 	drawPosts(g);
     }
 
-    void setPoints() {
+    public void setPoints() {
 	super.setPoints();
 	int ww = opwidth;
 	int wtot = ww * 2 + 2 * circDiam - circOverlap;

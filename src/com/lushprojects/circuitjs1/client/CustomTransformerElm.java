@@ -218,7 +218,7 @@ class CustomTransformerElm extends CircuitElm {
 	    adjustBbox(ptCore[0], ptCore[3]);
 	}
 	
-	void setPoints() {
+	public void setPoints() {
 	    super.setPoints();
 	    point2.y = point1.y;
 	    int i;

@@ -101,7 +101,7 @@ class DiodeElm extends CircuitElm {
     Polygon poly;
     Point cathode[];
 	
-    void setPoints() {
+    public void setPoints() {
 	super.setPoints();
 	calcLeads(16);
 	cathode = newPointArray(2);
@@ -259,7 +259,7 @@ class DiodeElm extends CircuitElm {
         
         super.setEditValue(n, ei);
     }
-    int getShortcut() { return 'd'; }
+    public int getShortcut() { return 'd'; }
     
     void setLastModelName(String n) {
 	lastModelName = n;

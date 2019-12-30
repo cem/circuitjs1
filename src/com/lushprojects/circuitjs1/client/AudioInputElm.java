@@ -119,7 +119,7 @@ class AudioInputElm extends RailElm {
 	}
 	
 	int getDumpType() { return 411; }
-	int getShortcut() { return 0; }
+	public int getShortcut() { return 0; }
 	
 	public EditInfo getEditInfo(int n) {
             if (n == 0) {

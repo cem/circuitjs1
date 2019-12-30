@@ -83,7 +83,7 @@ package com.lushprojects.circuitjs1.client;
 	    g.fillPolygon(arrowPoly);
 	    // draw base
 	    setVoltageColor(g, volts[0]);
-	    if (sim.powerCheckItem.getState())
+	    if (sim.topMenu.powerCheckItem.getState())
 		g.setColor(Color.gray);
 	    drawThickLine(g, point1, base);
 	    // draw dots
@@ -119,7 +119,7 @@ package com.lushprojects.circuitjs1.client;
 	}
 
 	Point rect[], coll[], emit[], base;
-	void setPoints() {
+	public void setPoints() {
 	    super.setPoints();
 	    int hs = 16;
 	    if ((flags & FLAG_FLIP) != 0)

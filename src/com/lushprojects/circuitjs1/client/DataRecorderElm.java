@@ -28,7 +28,7 @@ public class DataRecorderElm extends CircuitElm {
 	    dataPtr = 0;
 	    dataFull = false;
 	}
-	void setPoints() {
+	public void setPoints() {
 	    super.setPoints();
 	    lead1 = new Point();
 	}

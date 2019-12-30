@@ -25,5 +25,5 @@ class OpAmpSwapElm extends OpAmpElm {
 	    flags |= FLAG_SWAP;
 	}
 	Class getDumpClass() { return OpAmpElm.class; }
-	int getShortcut() { return 'A'; }
+	public int getShortcut() { return 'A'; }
     }

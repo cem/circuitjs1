@@ -50,7 +50,7 @@ class MemristorElm extends CircuitElm {
     }
 
     Point ps3, ps4;
-    void setPoints() {
+    public void setPoints() {
 	super.setPoints();
 	calcLeads(32);
 	ps3 = new Point();

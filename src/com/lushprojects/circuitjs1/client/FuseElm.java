@@ -49,7 +49,7 @@ class FuseElm extends CircuitElm {
 	    heat = 0;
 	    blown = false;
 	}
-	void setPoints() {
+	public void setPoints() {
 	    super.setPoints();
 	    int llen = 16;
 	    calcLeads(llen);

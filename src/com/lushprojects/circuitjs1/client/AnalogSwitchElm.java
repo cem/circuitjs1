@@ -46,7 +46,7 @@ class AnalogSwitchElm extends CircuitElm {
     boolean open;
 	
     Point ps, point3, lead3;
-    void setPoints() {
+    public void setPoints() {
 	super.setPoints();
 	calcLeads(32);
 	ps = new Point();

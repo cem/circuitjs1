@@ -45,7 +45,7 @@ class SparkGapElm extends CircuitElm {
 	    + breakdown + " " + holdcurrent;
     }
     Polygon arrow1, arrow2;
-    void setPoints() {
+    public void setPoints() {
 	super.setPoints();
 	int dist = 16;
 	int alen = 8;
