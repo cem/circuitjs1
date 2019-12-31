@@ -19,7 +19,9 @@
 
 package com.lushprojects.circuitjs1.client;
 
-    class TransistorElm extends CircuitElm {
+import com.lushprojects.circuitjs1.client.gui.Options;
+
+class TransistorElm extends CircuitElm {
 	// node 0 = base
 	// node 1 = collector
 	// node 2 = emitter
@@ -83,7 +85,7 @@ package com.lushprojects.circuitjs1.client;
 	    g.fillPolygon(arrowPoly);
 	    // draw base
 	    setVoltageColor(g, volts[0]);
-	    if (sim.topMenu.powerCheckItem.getState())
+	    if (!sim.options.get(Options.Type.SHOW_VOLTAGE_COLORS))
 		g.setColor(Color.gray);
 	    drawThickLine(g, point1, base);
 	    // draw dots

@@ -27,6 +27,8 @@ import java.util.Vector;
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
 
+import com.lushprojects.circuitjs1.client.gui.Options;
+
 // plot of single value on a scope
 class ScopePlot {
     double minValues[], maxValues[];
@@ -124,7 +126,7 @@ class ScopePlot {
 	    color = "#FFFF00";
 	    break;
 	default:
-	    color = (CirSim.theSim.topMenu.printableCheckItem.getState()) ? "#000000" : "#FFFFFF";
+	    color = (CirSim.theSim.options.get(Options.Type.PRINTABLE)) ? "#000000" : "#FFFFFF";
 	    break;
 	}
     }
@@ -434,7 +436,7 @@ public class Scope {
     		draw_ox = x2;
     		draw_oy = y2;
     	}
-		if (sim.topMenu.printableCheckItem.getState()) {
+		if (sim.options.get(Options.Type.PRINTABLE)) {
 			imageContext.setStrokeStyle("#000000");
 		} else {
 			imageContext.setStrokeStyle("#ffffff");
@@ -449,7 +451,7 @@ public class Scope {
 	
     void clear2dView() {
     	if (imageContext!=null) {
-    		if (sim.topMenu.printableCheckItem.getState()) {
+    		if (sim.options.get(Options.Type.PRINTABLE)) {
     			imageContext.setFillStyle("#ffffff");
     		} else {
     			imageContext.setFillStyle("#000000");
@@ -586,7 +588,7 @@ public class Scope {
     	if (alphadiv>2) {
     		alphadiv=0;
     		imageContext.setGlobalAlpha(0.01);
-    		if (sim.topMenu.printableCheckItem.getState()) {
+    		if (sim.options.get(Options.Type.PRINTABLE)) {
     			imageContext.setFillStyle("#ffffff");
     		} else {
     			imageContext.setFillStyle("#000000");
@@ -845,7 +847,7 @@ public class Scope {
     	int ll;
     	String minorDiv = "#303030";
     	String majorDiv = "#A0A0A0";
-    	if (sim.topMenu.printableCheckItem.getState()) {
+    	if (sim.options.get(Options.Type.PRINTABLE)) {
     	    minorDiv = "#D0D0D0";
     	    majorDiv = "#808080";
     	    curColor = "#A0A000";
@@ -996,7 +998,7 @@ public class Scope {
 	g.setColor(CircuitElm.whiteColor);
 	g.drawLine(sim.mouseCursorX, rect.y, sim.mouseCursorX, rect.y+rect.height);
 	//	    g.drawLine(rect.x, sim.mouseCursorY, rect.x+rect.width, sim.mouseCursorY);
-	g.setColor(sim.topMenu.printableCheckItem.getState() ? Color.white : Color.black);
+	g.setColor(sim.options.get(Options.Type.PRINTABLE) ? Color.white : Color.black);
 	int bx = sim.mouseCursorX;
 	if (bx < szw/2)
 	    bx = szw/2;

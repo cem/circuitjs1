@@ -22,6 +22,7 @@ package com.lushprojects.circuitjs1.client;
 import com.google.gwt.canvas.dom.client.CanvasGradient;
 import com.google.gwt.canvas.dom.client.Context2d.LineCap;
 import com.google.gwt.i18n.client.NumberFormat;
+import com.lushprojects.circuitjs1.client.gui.Options;
 import com.lushprojects.circuitjs1.client.gui.TopMenu;
 
 // circuit element class
@@ -105,8 +106,6 @@ public abstract class CircuitElm implements Editable {
 	showFormat=NumberFormat.getFormat("####.###");
 
 	shortFormat=NumberFormat.getFormat("####.#");
-	
-	topMenu = s.topMenu;
     }
     
     public static void setColorScale() {
@@ -121,7 +120,7 @@ public abstract class CircuitElm implements Editable {
 	    } else {
 		int n1 = (int) (128 * v) + 127;
 		int n2 = (int) (127 * (1 - v));
-		if (topMenu.alternativeColorCheckItem.getState())
+		if (sim.options.get(Options.Type.ALTERNATIVE_COLOR))
 		    colorScale[i] = new Color(n2, n2, n1);
 		else
 		    colorScale[i] = new Color(n2, n1, n2);
@@ -317,12 +316,12 @@ public abstract class CircuitElm implements Editable {
 
     // draw current dots from point a to b
     void drawDots(Graphics g, Point pa, Point pb, double pos) {
-	 if ((!sim.simIsRunning()) || pos == 0 || !sim.topMenu.dotsCheckItem.getState())
+	 if ((!sim.simIsRunning()) || pos == 0 || !sim.options.get(Options.Type.SHOW_CURRENT_DOTS))
 	    return;
 	int dx = pb.x-pa.x;
 	int dy = pb.y-pa.y;
 	double dn = Math.sqrt(dx*dx+dy*dy);
-	g.setColor(sim.topMenu.conventionCheckItem.getState()?Color.yellow:Color.cyan);
+	g.setColor(sim.options.get(Options.Type.CONVENTION) ? Color.yellow : Color.cyan);
 	int ds = 16;
 	pos %= ds;
 	if (pos < 0)
@@ -638,7 +637,7 @@ public abstract class CircuitElm implements Editable {
 	g.context.setLineWidth(3.0);
 	g.context.transform(((double)(p2.x-p1.x))/len, ((double)(p2.y-p1.y))/len,
 		-((double)(p2.y-p1.y))/len,((double)(p2.x-p1.x))/len,p1.x,p1.y);
-	if (sim.topMenu.voltsCheckItem.getState() ) {
+	if (sim.options.get(Options.Type.SHOW_VOLTAGE_COLORS)) {
 	    CanvasGradient grad = g.context.createLinearGradient(0,0,len,0);
 	    grad.addColorStop(0, getVoltageColor(g,v1).getHexValue());
 	    grad.addColorStop(1.0, getVoltageColor(g,v2).getHexValue());
@@ -826,7 +825,7 @@ public abstract class CircuitElm implements Editable {
     	if (needsHighlight()) {
     	    	return (selectColor);
     	}
-    	if (!sim.topMenu.voltsCheckItem.getState()) {
+    	if (!sim.options.get(Options.Type.SHOW_VOLTAGE_COLORS)) {
     	    	return(whiteColor);
     	}
     	int c = (int) ((volts+voltageRange)*(colorScaleCount-1)/
@@ -848,13 +847,13 @@ public abstract class CircuitElm implements Editable {
 	  setConductanceColor(g, current/getVoltageDiff());
 	  return;
 	  }*/
-	if (!sim.topMenu.powerCheckItem.getState() )
+	if (sim.options.get(Options.Type.SHOW_VOLTAGE_COLORS))
 	    return;
 	setPowerColor(g, getPower());
     }
     
     void setPowerColor(Graphics g, double w0) {
-	if (!sim.topMenu.powerCheckItem.getState() )
+	if (sim.options.get(Options.Type.SHOW_VOLTAGE_COLORS))
 	    return;
     	if (needsHighlight()) {
 	    	g.setColor(selectColor);

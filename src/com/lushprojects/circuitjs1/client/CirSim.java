@@ -85,6 +85,8 @@ import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.Widget;
 import com.lushprojects.circuitjs1.client.gui.ElementContextMenu;
+import com.lushprojects.circuitjs1.client.gui.Options;
+import com.lushprojects.circuitjs1.client.gui.OptionsStorage;
 import com.lushprojects.circuitjs1.client.gui.TopMenu;
 import com.google.gwt.user.client.Window.Navigator;
 
@@ -191,6 +193,7 @@ public class CirSim implements MouseDownHandler, MouseMoveHandler, MouseUpHandle
     Rectangle circuitArea;
     Vector<String> undoStack, redoStack;
     double transform[];
+    public Options options;
 
     DockLayoutPanel layoutPanel;
     VerticalPanel verticalPanel;
@@ -282,13 +285,10 @@ public class CirSim implements MouseDownHandler, MouseMoveHandler, MouseUpHandle
 	scopeCount = 0;
 
 	random = new Random();
+	options = new Options(new OptionsStorage());
 
-	boolean printable = false;
-	boolean convention = true;
-	boolean euroRes = false;
-	boolean usRes = false;
-	
-
+	boolean euroResFromQP = false;
+	boolean usResFromQP = false;
 
 	readRecovery();
 
@@ -304,13 +304,67 @@ public class CirSim implements MouseDownHandler, MouseMoveHandler, MouseUpHandle
 	    startCircuit = qp.getValue("startCircuit");
 	    startLabel = qp.getValue("startLabel");
 	    startCircuitLink = qp.getValue("startCircuitLink");
-	    euroRes = qp.getBooleanValue("euroResistors", false);
-	    usRes = qp.getBooleanValue("usResistors", false);
-	    printable = qp.getBooleanValue("whiteBackground", getOptionFromStorage("whiteBackground", false));
-	    convention = qp.getBooleanValue("conventionalCurrent", getOptionFromStorage("conventionalCurrent", true));
+	    euroResFromQP = qp.getBooleanValue("euroResistors", false);
+	    usResFromQP = qp.getBooleanValue("usResistors", false);
 	} catch (Exception e) {
 	}
 
+	// Default options
+	options.set(Options.Type.SHOW_VOLTAGE_COLORS, true);
+	options.set(Options.Type.SHOW_CURRENT_DOTS, true);
+	options.set(Options.Type.SHOW_VALUES, true);
+	options.set(Options.Type.EURO_RESISTOR, !weAreInUS());
+	options.set(Options.Type.PRINTABLE, false);
+	options.set(Options.Type.CONVENTION, true);
+	options.set(Options.Type.EURO_GATES, weAreInGermany());
+	options.set(Options.Type.CROSS_HAIR, false);
+	options.set(Options.Type.ALTERNATIVE_COLOR, false);
+	
+	// Load saved options
+	options.setAllFromStorage();
+	
+	// Force these options since they come from the query params
+	if (euroResFromQP) {
+	    options.set(Options.Type.EURO_RESISTOR, true);
+	} else if (usResFromQP) {
+	    options.set(Options.Type.EURO_RESISTOR, false);
+	}
+	
+	// Persist any changes from now on
+	options.enablePersist();
+	
+	options.addListener(Options.Type.SHOW_VOLTAGE_COLORS, new Runnable() {
+	    public void run() {
+		setPowerBarEnable();
+	    }
+	});
+	
+	options.addListener(Options.Type.SMALL_GRID, new Runnable() {
+	    public void run() {
+		setGrid();
+	    }
+	});
+	
+	options.addListener(Options.Type.EURO_GATES, new Runnable() {
+	    public void run() {
+		for (int i = 0; i != elmList.size(); i++)
+		    getElm(i).setPoints();
+	    }
+	});
+	
+	options.addListener(Options.Type.PRINTABLE, new Runnable() {
+	    public void run() {
+		for (int i = 0; i < scopeCount; i++)
+		    scopes[i].setRect(scopes[i].rect);
+	    }
+	});
+	
+	options.addListener(Options.Type.ALTERNATIVE_COLOR, new Runnable() {
+	    public void run() {
+		CircuitElm.setColorScale();
+	    }
+	});
+	
 	transform = new double[6];
 
 
@@ -328,7 +382,7 @@ public class CirSim implements MouseDownHandler, MouseMoveHandler, MouseUpHandle
 	// make buttons side by side if there's room
 	buttonPanel = (VERTICALPANELWIDTH == 166) ? new HorizontalPanel() : new VerticalPanel();
 
-	topMenu = new TopMenu(this, localizationMap, euroRes, usRes, convention, printable);
+	topMenu = new TopMenu(this, options, localizationMap);
 	CircuitElm.initClass(this);
 	topMenu.init();
 	
@@ -446,24 +500,8 @@ public class CirSim implements MouseDownHandler, MouseMoveHandler, MouseUpHandle
 	cv.addDomHandler(this, ContextMenuEvent.getType());
 	Event.addNativePreviewHandler(this);
 	cv.addMouseWheelHandler(this);
+	options.enablePersist();
 	setSimRunning(true);
-    }
-
-    public boolean getOptionFromStorage(String key, boolean val) {
-	Storage stor = Storage.getLocalStorageIfSupported();
-	if (stor == null)
-	    return val;
-	String s = stor.getItem(key);
-	if (s == null)
-	    return val;
-	return s == "true";
-    }
-
-    public void setOptionInStorage(String key, boolean val) {
-	Storage stor = Storage.getLocalStorageIfSupported();
-	if (stor == null)
-	    return;
-	stor.setItem(key, val ? "true" : "false");
     }
 
     // install touch handlers
@@ -655,7 +693,7 @@ public class CirSim implements MouseDownHandler, MouseMoveHandler, MouseUpHandle
 	Graphics g = new Graphics(backcontext);
 
 	CircuitElm.selectColor = Color.cyan;
-	if (topMenu.printableCheckItem.getState()) {
+	if (options.get(Options.Type.PRINTABLE)) {
 	    CircuitElm.whiteColor = Color.black;
 	    CircuitElm.lightGrayColor = Color.black;
 	    g.setColor(Color.white);
@@ -685,7 +723,7 @@ public class CirSim implements MouseDownHandler, MouseMoveHandler, MouseUpHandle
 		double c = currentBar.getValue();
 		c = java.lang.Math.exp(c / 3.5 - 14.2);
 		CircuitElm.currentMult = 1.7 * inc * c;
-		if (!topMenu.conventionCheckItem.getState())
+		if (!options.get(Options.Type.CONVENTION))
 		    CircuitElm.currentMult = -CircuitElm.currentMult;
 	    }
 
@@ -717,7 +755,7 @@ public class CirSim implements MouseDownHandler, MouseMoveHandler, MouseUpHandle
 	// draw elements
 	backcontext.setTransform(transform[0], transform[1], transform[2], transform[3], transform[4], transform[5]);
 	for (i = 0; i != elmList.size(); i++) {
-	    if (topMenu.powerCheckItem.getState())
+	    if (!options.get(Options.Type.SHOW_VOLTAGE_COLORS))
 		g.setColor(Color.gray);
 	    /*
 	     * else if (conductanceCheckItem.getState()) g.setColor(Color.white);
@@ -773,7 +811,7 @@ public class CirSim implements MouseDownHandler, MouseMoveHandler, MouseUpHandle
 	    g.drawRect(selectedArea.x, selectedArea.y, selectedArea.width, selectedArea.height);
 	}
 
-	if (topMenu.crossHairCheckItem.getState() && mouseCursorX >= 0 && mouseCursorX <= circuitArea.width
+	if (options.get(Options.Type.CROSS_HAIR) && mouseCursorX >= 0 && mouseCursorX <= circuitArea.width
 		&& mouseCursorY <= circuitArea.height) {
 	    g.setColor(Color.gray);
 	    int x = snapGrid(inverseTransformX(mouseCursorX));
@@ -784,7 +822,7 @@ public class CirSim implements MouseDownHandler, MouseMoveHandler, MouseUpHandle
 
 	backcontext.setTransform(1, 0, 0, 1, 0, 0);
 
-	if (topMenu.printableCheckItem.getState())
+	if (options.get(Options.Type.PRINTABLE))
 	    g.setColor(Color.white);
 	else
 	    g.setColor(Color.black);
@@ -2599,11 +2637,10 @@ public class CirSim implements MouseDownHandler, MouseMoveHandler, MouseUpHandle
 	    elmList.removeAllElements();
 	    hintType = -1;
 	    timeStep = 5e-6;
-	    topMenu.dotsCheckItem.setState(false);
-	    topMenu.smallGridCheckItem.setState(false);
-	    topMenu.powerCheckItem.setState(false);
-	    topMenu.voltsCheckItem.setState(true);
-	    topMenu.showValuesCheckItem.setState(true);
+	    options.set(Options.Type.SHOW_CURRENT_DOTS, false);
+	    options.set(Options.Type.SMALL_GRID, false);
+	    options.set(Options.Type.SHOW_VOLTAGE_COLORS, true);
+	    options.set(Options.Type.SHOW_VALUES, true);
 	    setGrid();
 	    speedBar.setValue(117); // 57
 	    currentBar.setValue(50);
@@ -2733,11 +2770,11 @@ public class CirSim implements MouseDownHandler, MouseMoveHandler, MouseUpHandle
 
     void readOptions(StringTokenizer st) {
 	int flags = new Integer(st.nextToken()).intValue();
-	topMenu.dotsCheckItem.setState((flags & 1) != 0);
-	topMenu.smallGridCheckItem.setState((flags & 2) != 0);
-	topMenu.voltsCheckItem.setState((flags & 4) == 0);
-	topMenu.powerCheckItem.setState((flags & 8) == 8);
-	topMenu.showValuesCheckItem.setState((flags & 16) == 0);
+	options.set(Options.Type.SHOW_CURRENT_DOTS, (flags & 1) != 0);
+	options.set(Options.Type.SMALL_GRID, (flags & 2) != 0);
+	options.set(Options.Type.SHOW_VOLTAGE_COLORS, (flags & 4) == 0);
+	// options.set(Options.Type.POWER, (flags & 8) == 8);
+	options.set(Options.Type.SHOW_VALUES, (flags & 16) == 0);
 	timeStep = new Double(st.nextToken()).doubleValue();
 	double sp = new Double(st.nextToken()).doubleValue();
 	int sp2 = (int) (Math.log(10 * sp) * 24 + 61.5);
@@ -3254,7 +3291,7 @@ public class CirSim implements MouseDownHandler, MouseMoveHandler, MouseUpHandle
 	} else {
 	    topMenu.doMainMenuChecks();
 	    contextPanel = new PopupPanel(true);
-	    contextPanel.add(topMenu.menuBar);
+	    contextPanel.add(topMenu.getDrawMenuBar());
 	    x = Math.max(0, Math.min(menuClientX, cv.getCoordinateSpaceWidth() - 400));
 	    y = Math.max(0, Math.min(menuClientY, cv.getCoordinateSpaceHeight() - 450));
 	    contextPanel.setPopupPosition(x, y);
@@ -3504,12 +3541,12 @@ public class CirSim implements MouseDownHandler, MouseMoveHandler, MouseUpHandle
     }
 
     public void setPowerBarEnable() {
-	if (topMenu.powerCheckItem.getState()) {
-	    powerLabel.setStyleName("disabled", false);
-	    powerBar.enable();
-	} else {
+	if (options.get(Options.Type.SHOW_VOLTAGE_COLORS)) {
 	    powerLabel.setStyleName("disabled", true);
 	    powerBar.disable();
+	} else {
+	    powerLabel.setStyleName("disabled", false);
+	    powerBar.enable();
 	}
     }
 
@@ -3525,7 +3562,7 @@ public class CirSim implements MouseDownHandler, MouseMoveHandler, MouseUpHandle
     }
 
     public void setGrid() {
-	gridSize = (topMenu.smallGridCheckItem.getState()) ? 8 : 16;
+	gridSize = options.get(Options.Type.SMALL_GRID) ? 8 : 16;
 	gridMask = ~(gridSize - 1);
 	gridRound = gridSize / 2 - 1;
     }
@@ -4665,11 +4702,11 @@ public class CirSim implements MouseDownHandler, MouseMoveHandler, MouseUpHandle
 	double scale = 1;
 
 	// turn on white background, turn off current display
-	boolean p = topMenu.printableCheckItem.getState();
-	boolean c = topMenu.dotsCheckItem.getState();
+	boolean p = options.get(Options.Type.PRINTABLE);
+	boolean c = options.get(Options.Type.SHOW_CURRENT_DOTS);
 	if (print)
-	    topMenu.printableCheckItem.setState(true);
-	if (topMenu.printableCheckItem.getState()) {
+	    options.set(Options.Type.PRINTABLE, true);
+	if (options.get(Options.Type.PRINTABLE)) {
 	    CircuitElm.whiteColor = Color.black;
 	    CircuitElm.lightGrayColor = Color.black;
 	    g.setColor(Color.white);
@@ -4679,7 +4716,7 @@ public class CirSim implements MouseDownHandler, MouseMoveHandler, MouseUpHandle
 	    g.setColor(Color.black);
 	    g.fillRect(0, 0, g.context.getCanvas().getWidth(), g.context.getCanvas().getHeight());
 	}
-	topMenu.dotsCheckItem.setState(false);
+	options.set(Options.Type.SHOW_CURRENT_DOTS, false);
 
 	if (bounds != null)
 	    scale = Math.min(w / (double) (bounds.width + wmargin), h / (double) (bounds.height + hmargin));
@@ -4702,8 +4739,8 @@ public class CirSim implements MouseDownHandler, MouseMoveHandler, MouseUpHandle
 	}
 
 	// restore everything
-	topMenu.printableCheckItem.setState(p);
-	topMenu.dotsCheckItem.setState(c);
+	options.set(Options.Type.PRINTABLE, p);
+	options.set(Options.Type.SHOW_CURRENT_DOTS, c);
 	transform = oldTransform;
 	return cv;
     }

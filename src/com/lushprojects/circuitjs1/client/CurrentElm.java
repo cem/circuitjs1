@@ -19,7 +19,9 @@
 
 package com.lushprojects.circuitjs1.client;
 
-    class CurrentElm extends CircuitElm {
+import com.lushprojects.circuitjs1.client.gui.Options;
+
+class CurrentElm extends CircuitElm {
 	double currentValue;
 	public CurrentElm(int xx, int yy) {
 	    super(xx, yy);
@@ -62,7 +64,7 @@ package com.lushprojects.circuitjs1.client;
 	    g.fillPolygon(arrow);
 	    setBbox(point1, point2, cr);
 	    doDots(g);
-	    if (sim.topMenu.showValuesCheckItem.getState()) {
+	    if (sim.options.get(Options.Type.SHOW_VALUES)) {
 		String s = getShortUnitText(currentValue, "A");
 		if (dx == 0 || dy == 0)
 		    drawValues(g, s, cr);

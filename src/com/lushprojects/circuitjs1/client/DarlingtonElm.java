@@ -1,5 +1,7 @@
 package com.lushprojects.circuitjs1.client;
 
+import com.lushprojects.circuitjs1.client.gui.Options;
+
 // Test element to evaluate if constructing compound elements from individual transistors is feasible
 
 // Iain Sharp, Feb 2017
@@ -62,7 +64,7 @@ public class DarlingtonElm extends CompositeElm {
 	g.fillPolygon(arrowPoly);
 	// draw base
 	setVoltageColor(g, volts[0]);
-	if (sim.topMenu.powerCheckItem.getState())
+	if (!sim.options.get(Options.Type.SHOW_VOLTAGE_COLORS))
 	    g.setColor(Color.gray);
 	drawThickLine(g, point1, base);
 	// draw dots

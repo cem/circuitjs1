@@ -19,7 +19,9 @@
 
 package com.lushprojects.circuitjs1.client;
 
-    class CapacitorElm extends CircuitElm {
+import com.lushprojects.circuitjs1.client.gui.Options;
+
+class CapacitorElm extends CircuitElm {
 	double capacitance;
 	double compResistance, voltdiff;
 	Point plate1[], plate2[];
@@ -74,7 +76,7 @@ package com.lushprojects.circuitjs1.client;
 	    drawThickLine(g, point1, lead1);
 	    setPowerColor(g, false);
 	    drawThickLine(g, plate1[0], plate1[1]);
-	    if (sim.topMenu.powerCheckItem.getState())
+	    if (!sim.options.get(Options.Type.SHOW_VOLTAGE_COLORS))
 		g.setColor(Color.gray);
 
 	    // draw second lead and plate
@@ -95,7 +97,7 @@ package com.lushprojects.circuitjs1.client;
 		drawDots(g, point2, lead2, -curcount);
 	    }
 	    drawPosts(g);
-	    if (sim.topMenu.showValuesCheckItem.getState()) {
+	    if (sim.options.get(Options.Type.SHOW_VALUES)) {
 		String s = getShortUnitText(capacitance, "F");
 		drawValues(g, s, hs);
 	    }

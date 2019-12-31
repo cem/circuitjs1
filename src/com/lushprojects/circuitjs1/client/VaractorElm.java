@@ -1,5 +1,7 @@
 package com.lushprojects.circuitjs1.client;
 
+import com.lushprojects.circuitjs1.client.gui.Options;
+
 class VaractorElm extends DiodeElm {
     double baseCapacitance;
     
@@ -64,7 +66,7 @@ class VaractorElm extends DiodeElm {
 	setVoltageColor(g, volts[0]);
 	setPowerColor(g, false);
 	drawThickLine(g, plate1[0], plate1[1]);
-	if (sim.topMenu.powerCheckItem.getState())
+	if (!sim.options.get(Options.Type.SHOW_VOLTAGE_COLORS))
 	    g.setColor(Color.gray);
 
 	// draw second plate

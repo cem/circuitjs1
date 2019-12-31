@@ -23,6 +23,7 @@ public class TopMenu {
     public String shortcuts[];
     public Vector<CheckboxMenuItem> mainMenuItems = new Vector<CheckboxMenuItem>();
     public Vector<String> mainMenuItemNames = new Vector<String>();
+    Options options;
     
     public MenuBar menuBar;
     MenuItem aboutItem;
@@ -47,33 +48,28 @@ public class TopMenu {
     MenuBar scopesMenuBar;
     
     MenuBar optionsMenuBar;
-    public CheckboxMenuItem dotsCheckItem;
-    public CheckboxMenuItem voltsCheckItem;
-    public CheckboxMenuItem powerCheckItem;
-    public CheckboxMenuItem smallGridCheckItem;
-    public CheckboxMenuItem crossHairCheckItem;
-    public CheckboxMenuItem showValuesCheckItem;
+    CheckboxMenuItem dotsCheckItem;
+    CheckboxMenuItem voltsCheckItem;
+    CheckboxMenuItem powerCheckItem;
+    CheckboxMenuItem smallGridCheckItem;
+    CheckboxMenuItem crossHairCheckItem;
+    CheckboxMenuItem showValuesCheckItem;
     CheckboxMenuItem conductanceCheckItem;
-    public CheckboxMenuItem euroResistorCheckItem;
-    public CheckboxMenuItem euroGatesCheckItem;
-    public CheckboxMenuItem printableCheckItem;
-    public CheckboxMenuItem alternativeColorCheckItem;
-    public CheckboxMenuItem conventionCheckItem;
+    CheckboxMenuItem euroResistorCheckItem;
+    CheckboxMenuItem euroGatesCheckItem;
+    CheckboxMenuItem printableCheckItem;
+    CheckboxMenuItem alternativeColorCheckItem;
+    CheckboxMenuItem conventionCheckItem;
 
     String ctrlMetaKey;
     HashMap<String,String> localizationMap;
     CirSim cirSim;
     boolean isMac;
-    boolean euroRes, usRes, convention, printable;
     
-    public TopMenu(CirSim aCirSim, HashMap<String,String> aLocalizationMap, boolean aEuroRes, boolean aUsRes, boolean aConvention, boolean aPrintable) {
+    public TopMenu(CirSim aCirSim, Options aOptions, HashMap<String,String> aLocalizationMap) {
 	cirSim = aCirSim;
+	options = aOptions;
 	localizationMap = aLocalizationMap;
-	euroRes = aEuroRes;
-	usRes = aUsRes;
-	convention = aConvention;
-	printable = aPrintable;
-	
 	
 	String os = Navigator.getPlatform();
 	isMac = (os.toLowerCase().contains("mac"));
@@ -136,15 +132,15 @@ public class TopMenu {
 	scopesMenuBar.addItem(new MenuItem(LS("Combine All"), new MyCommand("scopes", "combineAll")));
 	
 	optionsMenuBar = new MenuBar(true);
-	buildOptionsMenu(optionsMenuBar, euroRes, usRes, convention, printable);
+	buildOptionsMenu(optionsMenuBar);
 
 	drawMenuBar = new MenuBar(true);
-	buildDrawMenu(drawMenuBar);
+	buildDrawMenu(getDrawMenuBar());
 	
 	menuBar = new MenuBar();
 	menuBar.addItem(LS("File"), fileMenuBar);
 	menuBar.addItem(LS("Edit"), editMenuBar);
-	menuBar.addItem(LS("Draw"), drawMenuBar);
+	menuBar.addItem(LS("Draw"), getDrawMenuBar());
 	menuBar.addItem(LS("Scopes"), scopesMenuBar);
 	menuBar.addItem(LS("Options"), optionsMenuBar);
 	
@@ -361,86 +357,87 @@ public class TopMenu {
     	mi.setShortcut(LS("(space or Shift-drag)"));
     }
     
-    void buildOptionsMenu(MenuBar m, boolean euroRes, boolean usRes, boolean convention, boolean printable) {
-	boolean euroSetting = false;
-	if (euroRes)
-	    euroSetting = true;
-	else if (usRes)
-	    euroSetting = false;
-	else
-	    euroSetting = cirSim.getOptionFromStorage("euroResistors", !cirSim.weAreInUS());
-	boolean euroGates = cirSim.getOptionFromStorage("euroGates", cirSim.weAreInGermany());
+    void buildOptionsMenu(MenuBar m) {
+	m.addItem(dotsCheckItem = new CheckboxMenuItem(LS("Show Current"), new Command() {
+	    public void execute() {
+		options.set(Options.Type.SHOW_CURRENT_DOTS, dotsCheckItem.getState());
+	    }
+	}));
+	dotsCheckItem.setState(options.get(Options.Type.SHOW_CURRENT_DOTS));
 	
-	m.addItem(dotsCheckItem = new CheckboxMenuItem(LS("Show Current")));
-	dotsCheckItem.setState(true);
 	m.addItem(voltsCheckItem = new CheckboxMenuItem(LS("Show Voltage"), new Command() {
 	    public void execute() {
-		if (voltsCheckItem.getState())
-		    powerCheckItem.setState(false);
-		cirSim.setPowerBarEnable();
+		boolean voltsSet = voltsCheckItem.getState();
+		powerCheckItem.setState(!voltsSet);
+		options.set(Options.Type.SHOW_VOLTAGE_COLORS, voltsSet);
 	    }
 	}));
-	voltsCheckItem.setState(true);
+	voltsCheckItem.setState(options.get(Options.Type.SHOW_VOLTAGE_COLORS));
+	
 	m.addItem(powerCheckItem = new CheckboxMenuItem(LS("Show Power"), new Command() {
 	    public void execute() {
-		if (powerCheckItem.getState())
-		    voltsCheckItem.setState(false);
-		cirSim.setPowerBarEnable();
+		boolean powerSet = powerCheckItem.getState();
+		voltsCheckItem.setState(!powerSet);
+		options.set(Options.Type.SHOW_VOLTAGE_COLORS, !powerSet);
 	    }
 	}));
-	m.addItem(showValuesCheckItem = new CheckboxMenuItem(LS("Show Values")));
-	showValuesCheckItem.setState(true);
-	// m.add(conductanceCheckItem = getCheckItem(LS("Show Conductance")));
+	powerCheckItem.setState(!voltsCheckItem.getState());
+	
+	m.addItem(showValuesCheckItem = new CheckboxMenuItem(LS("Show Values"), new Command() {
+	    public void execute() {
+		options.set(Options.Type.SHOW_VALUES, showValuesCheckItem.getState());
+	    }
+	}));
+	showValuesCheckItem.setState(options.get(Options.Type.SHOW_VALUES));
+	
 	m.addItem(smallGridCheckItem = new CheckboxMenuItem(LS("Small Grid"), new Command() {
 	    public void execute() {
-		cirSim.setGrid();
+		options.set(Options.Type.SMALL_GRID, smallGridCheckItem.getState());
 	    }
 	}));
+	smallGridCheckItem.setState(options.get(Options.Type.SMALL_GRID));
+	
 	m.addItem(crossHairCheckItem = new CheckboxMenuItem(LS("Show Cursor Cross Hairs"), new Command() {
 	    public void execute() {
-		cirSim.setOptionInStorage("crossHair", crossHairCheckItem.getState());
+		options.set(Options.Type.CROSS_HAIR, crossHairCheckItem.getState());
 	    }
 	}));
-	crossHairCheckItem.setState(cirSim.getOptionFromStorage("crossHair", false));
+	crossHairCheckItem.setState(options.get(Options.Type.CROSS_HAIR));
+	
 	m.addItem(euroResistorCheckItem = new CheckboxMenuItem(LS("European Resistors"), new Command() {
 	    public void execute() {
-		cirSim.setOptionInStorage("euroResistors", euroResistorCheckItem.getState());
+		options.set(Options.Type.EURO_RESISTOR, euroResistorCheckItem.getState());
 	    }
 	}));
-	euroResistorCheckItem.setState(euroSetting);
+	euroResistorCheckItem.setState(options.get(Options.Type.EURO_RESISTOR));
+	
 	m.addItem(euroGatesCheckItem = new CheckboxMenuItem(LS("IEC Gates"), new Command() {
 	    public void execute() {
-		cirSim.setOptionInStorage("euroGates", euroGatesCheckItem.getState());
-		int i;
-		for (i = 0; i != cirSim.elmList.size(); i++)
-		    cirSim.getElm(i).setPoints();
+		options.set(Options.Type.EURO_GATES, euroGatesCheckItem.getState());
 	    }
 	}));
-	euroGatesCheckItem.setState(euroGates);
+	euroGatesCheckItem.setState(options.get(Options.Type.EURO_GATES));
+	
 	m.addItem(printableCheckItem = new CheckboxMenuItem(LS("White Background"), new Command() {
 	    public void execute() {
-		int i;
-		for (i = 0; i < cirSim.scopeCount; i++)
-		    cirSim.scopes[i].setRect(cirSim.scopes[i].rect);
-		cirSim.setOptionInStorage("whiteBackground", printableCheckItem.getState());
+		options.set(Options.Type.PRINTABLE, printableCheckItem.getState());
 	    }
 	}));
-	printableCheckItem.setState(printable);
+	printableCheckItem.setState(options.get(Options.Type.PRINTABLE));
+	
 	m.addItem(alternativeColorCheckItem = new CheckboxMenuItem(LS("Alt Color for Volts & Pwr"), new Command() {
 	    public void execute() {
-
-		cirSim.setOptionInStorage("alternativeColor", alternativeColorCheckItem.getState());
-		CircuitElm.setColorScale();
+		options.set(Options.Type.ALTERNATIVE_COLOR, alternativeColorCheckItem.getState());
 	    }
 	}));
-	alternativeColorCheckItem.setState(cirSim.getOptionFromStorage("alternativeColor", false));
+	alternativeColorCheckItem.setState(options.get(Options.Type.ALTERNATIVE_COLOR));
 
 	m.addItem(conventionCheckItem = new CheckboxMenuItem(LS("Conventional Current Motion"), new Command() {
 	    public void execute() {
-		cirSim.setOptionInStorage("conventionalCurrent", conventionCheckItem.getState());
+		options.set(Options.Type.CONVENTION, conventionCheckItem.getState());
 	    }
 	}));
-	conventionCheckItem.setState(convention);
+	conventionCheckItem.setState(options.get(Options.Type.CONVENTION));
 
 	m.addItem(new CheckboxAlignedMenuItem(LS("Shortcuts..."), new MyCommand("options", "shortcuts")));
 	m.addItem(optionsItem = new CheckboxAlignedMenuItem(LS("Other Options..."), new MyCommand("options", "other")));
@@ -519,5 +516,9 @@ public class TopMenu {
 	f |= (powerCheckItem.getState()) ? 8 : 0;
 	f |= (showValuesCheckItem.getState()) ? 0 : 16;
 	return f;
+    }
+
+    public MenuBar getDrawMenuBar() {
+	return drawMenuBar;
     }
 }

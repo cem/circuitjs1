@@ -1,5 +1,7 @@
 package com.lushprojects.circuitjs1.client;
 
+import com.lushprojects.circuitjs1.client.gui.Options;
+
 public class OhmMeterElm extends CurrentElm {
 	public OhmMeterElm(int xx, int yy) {
 	    super(xx, yy);
@@ -25,7 +27,7 @@ public class OhmMeterElm extends CurrentElm {
 
 	    setBbox(point1, point2, cr);
 	    doDots(g);
-	    if (sim.topMenu.showValuesCheckItem.getState() && current != 0) {
+	    if (sim.options.get(Options.Type.SHOW_VALUES) && current != 0) {
 		String s = getShortUnitText(getVoltageDiff()/current, sim.ohmString);
 		if (dx == 0 || dy == 0)
 		    drawValues(g, s, cr);

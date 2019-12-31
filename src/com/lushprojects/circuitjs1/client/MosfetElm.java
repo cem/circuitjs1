@@ -19,7 +19,9 @@
 
 package com.lushprojects.circuitjs1.client;
 
-    class MosfetElm extends CircuitElm {
+import com.lushprojects.circuitjs1.client.gui.Options;
+
+class MosfetElm extends CircuitElm {
 	int pnp;
 	int FLAG_PNP = 1;
 	int FLAG_SHOWVT = 2;
@@ -119,7 +121,7 @@ package com.lushprojects.circuitjs1.client;
 		int segments = 6;
 		int i;
 		setPowerColor(g, true);
-		boolean power = sim.topMenu.powerCheckItem.getState();
+		boolean power = !sim.options.get(Options.Type.SHOW_VOLTAGE_COLORS);
 		double segf = 1./segments;
 		boolean enhancement = vt > 0 && showBulk();
 		for (i = 0; i != segments; i++) {

@@ -1,7 +1,6 @@
 package com.lushprojects.circuitjs1.client;
 
-
-
+import com.lushprojects.circuitjs1.client.gui.Options;
 
 public class ComparatorElm extends CompositeElm {
     
@@ -16,7 +15,7 @@ public class ComparatorElm extends CompositeElm {
     public ComparatorElm(int xx, int yy) {
 	super(xx, yy, modelString, modelExternalNodes);
 	noDiagonal = true;
-	setSize(sim.topMenu != null && sim.topMenu.smallGridCheckItem.getState() ? 1 : 2);
+	setSize(sim.options.get(Options.Type.SMALL_GRID) ? 1 : 2);
     }
     
 

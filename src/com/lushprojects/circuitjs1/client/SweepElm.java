@@ -19,6 +19,8 @@
 
 package com.lushprojects.circuitjs1.client;
 
+import com.lushprojects.circuitjs1.client.gui.Options;
+
 class SweepElm extends CircuitElm {
     double maxV, maxF, minF, sweepTime, frequency;
     final int FLAG_LOG = 1;
@@ -86,7 +88,7 @@ class SweepElm extends CircuitElm {
 	g.context.stroke();
 	g.context.setLineWidth(1.0);
 
-	if (sim.topMenu.showValuesCheckItem.getState()) {
+	if (sim.options.get(Options.Type.SHOW_VALUES)) {
 	    String s = getShortUnitText(frequency, "Hz");
 	    if (dx == 0 || dy == 0)
 		drawValues(g, s, circleSize);

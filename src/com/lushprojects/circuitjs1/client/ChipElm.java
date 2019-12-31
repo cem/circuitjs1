@@ -19,7 +19,9 @@
 
 package com.lushprojects.circuitjs1.client;
 
-    abstract class ChipElm extends CircuitElm {
+import com.lushprojects.circuitjs1.client.gui.Options;
+
+abstract class ChipElm extends CircuitElm {
 	int csize, cspc, cspc2;
 	int bits;
 	final int FLAG_SMALL = 1;
@@ -31,7 +33,7 @@ package com.lushprojects.circuitjs1.client;
 		bits = (this instanceof RingCounterElm) ? 10 : 4;
 	    noDiagonal = true;
 	    setupPins();
-	    setSize(sim.topMenu != null && sim.topMenu.smallGridCheckItem.getState() ? 1 : 2);
+	    setSize(sim.options.get(Options.Type.SMALL_GRID) ? 1 : 2);
 	}
 	public ChipElm(int xa, int ya, int xb, int yb, int f,
 		       StringTokenizer st) {
@@ -78,7 +80,7 @@ package com.lushprojects.circuitjs1.client;
 		p.curcount = updateDotCount(p.current, p.curcount);
 		drawDots(g, b, a, p.curcount);
 		if (p.bubble) {
-		    g.setColor(sim.topMenu.printableCheckItem.getState() ?
+		    g.setColor(sim.options.get(Options.Type.PRINTABLE) ?
 			       Color.white : Color.black);
 		    drawThickCircle(g, p.bubbleX, p.bubbleY, 1);
 		    g.setColor(lightGrayColor);

@@ -19,7 +19,9 @@
 
 package com.lushprojects.circuitjs1.client;
 
-    class SevenSegElm extends ChipElm {
+import com.lushprojects.circuitjs1.client.gui.Options;
+
+class SevenSegElm extends ChipElm {
 	// base segment count not including decimal point or colon
 	int baseSegmentCount;
 	
@@ -276,7 +278,7 @@ package com.lushprojects.circuitjs1.client;
 	void setColor(Graphics g, int p) {
 	    if (diodeDirection == 0) {
 		g.setColor(pins[p].value ? Color.red :
-		    sim.topMenu.printableCheckItem.getState() ? Color.white : darkred);
+		    sim.options.get(Options.Type.PRINTABLE) ? Color.white : darkred);
 		return;
 	    }
 	    // 10mA current = max brightness

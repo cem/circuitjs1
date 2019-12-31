@@ -20,6 +20,7 @@
 package com.lushprojects.circuitjs1.client;
 
 import com.google.gwt.user.client.ui.Label;
+import com.lushprojects.circuitjs1.client.gui.Options;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.event.dom.client.MouseWheelEvent;
 import com.google.gwt.event.dom.client.MouseWheelHandler;
@@ -145,7 +146,7 @@ class PotElm extends CircuitElm implements Command, MouseWheelHandler {
 	int segments = 16;
 	int i;
 	int ox = 0;
-	int hs = sim.topMenu.euroResistorCheckItem.getState() ? 6 : 8;
+	int hs = sim.options.get(Options.Type.EURO_RESISTOR) ? 6 : 8;
 	double v1 = volts[0];
 	double v2 = volts[1];
 	double v3 = volts[2];
@@ -154,7 +155,7 @@ class PotElm extends CircuitElm implements Command, MouseWheelHandler {
 	setPowerColor(g, true);
 	double segf = 1./segments;
 	int divide = (int) (segments*position);
-	if (!sim.topMenu.euroResistorCheckItem.getState()) {
+	if (!sim.options.get(Options.Type.EURO_RESISTOR)) {
 	    // draw zigzag
 	    for (i = 0; i != segments; i++) {
 		int nx = 0;
@@ -207,7 +208,7 @@ class PotElm extends CircuitElm implements Command, MouseWheelHandler {
 	}
 	drawPosts(g);
 
-	if (sim.topMenu.showValuesCheckItem.getState() && resistance1 > 0 && (flags & FLAG_SHOW_VALUES) != 0) {
+	if (sim.options.get(Options.Type.SHOW_VALUES) && resistance1 > 0 && (flags & FLAG_SHOW_VALUES) != 0) {
 	    // check for vertical pot with 3rd terminal on left
 	    boolean reverseY = (post3.x < lead1.x && lead1.x == lead2.x);
 	    // check for horizontal pot with 3rd terminal on top

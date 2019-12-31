@@ -19,7 +19,9 @@
 
 package com.lushprojects.circuitjs1.client;
 
-    class OpAmpElm extends CircuitElm {
+import com.lushprojects.circuitjs1.client.gui.Options;
+
+class OpAmpElm extends CircuitElm {
 	int opsize, opheight, opwidth, opaddtext;
 	double maxOut, minOut, gain, gbw;
 	boolean reset;
@@ -33,7 +35,7 @@ package com.lushprojects.circuitjs1.client;
 	    maxOut = 15;
 	    minOut = -15;
 	    gbw = 1e6;
-	    setSize(sim.topMenu != null && sim.topMenu.smallGridCheckItem.getState() ? 1 : 2);
+	    setSize(sim.topMenu != null && sim.options.get(Options.Type.SMALL_GRID) ? 1 : 2);
 	    flags = FLAG_GAIN;
 	    gain = 100000;
 	}

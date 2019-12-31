@@ -19,7 +19,9 @@
 
 package com.lushprojects.circuitjs1.client;
 
-    class AndGateElm extends GateElm {
+import com.lushprojects.circuitjs1.client.gui.Options;
+
+class AndGateElm extends GateElm {
 	public AndGateElm(int xx, int yy) { super(xx, yy); }
 	public AndGateElm(int xa, int ya, int xb, int yb, int f,
 			  StringTokenizer st) {
@@ -31,7 +33,7 @@ package com.lushprojects.circuitjs1.client;
 	public void setPoints() {
 	    super.setPoints();
 	 
-	    if (useEuroGates()) {
+	    if (sim.options.get(Options.Type.EURO_GATES)) {
 		createEuroGatePolygon();
 	    } else {
 		// 0=topleft, 1-10 = top curve, 11 = right, 12-21=bottom curve,

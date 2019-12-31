@@ -20,6 +20,7 @@
 package com.lushprojects.circuitjs1.client;
 
 import com.google.gwt.user.client.Window;
+import com.lushprojects.circuitjs1.client.gui.Options;
 
 class VoltageElm extends CircuitElm {
     static final int FLAG_COS = 2;
@@ -252,7 +253,7 @@ class VoltageElm extends CircuitElm {
 	    break;
 	}
 	}
-	if (sim.topMenu.showValuesCheckItem.getState() && waveform != WF_NOISE) {
+	if (sim.options.get(Options.Type.SHOW_VALUES) && waveform != WF_NOISE) {
 	    String s = getShortUnitText(frequency, "Hz");
 	    if (dx == 0 || dy == 0)
 		drawValues(g, s, circleSize);

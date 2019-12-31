@@ -19,7 +19,9 @@
 
 package com.lushprojects.circuitjs1.client;
 
-    class InverterElm extends CircuitElm {
+import com.lushprojects.circuitjs1.client.gui.Options;
+
+class InverterElm extends CircuitElm {
 	double slewRate; // V/ns
 	double highVoltage;
 	public InverterElm(int xx, int yy) {
@@ -55,7 +57,7 @@ package com.lushprojects.circuitjs1.client;
 	    draw2Leads(g);
 	    g.setColor(needsHighlight() ? selectColor : lightGrayColor);
 	    drawThickPolygon(g, gatePoly);
-	    if (GateElm.useEuroGates())
+	    if (sim.options.get(Options.Type.EURO_GATES))
 		drawCenteredText(g, "1", center.x, center.y-6, true);
 	    drawThickCircle(g, pcircle.x, pcircle.y, 3);
 	    curcount = updateDotCount(current, curcount);
@@ -73,7 +75,7 @@ package com.lushprojects.circuitjs1.client;
 	    lead2 = interpPoint(point1, point2, .5+(ww+2)/dn);
 	    pcircle = interpPoint(point1, point2, .5+(ww-2)/dn);
 	    
-	    if (GateElm.useEuroGates()) {
+	    if (sim.options.get(Options.Type.EURO_GATES)) {
 		Point pts[] = newPointArray(4);
 		Point l2 = interpPoint(point1, point2, .5+(ww-5)/dn);   // make room for circle
 		interpPoint2(lead1, l2, pts[0], pts[1], 0, hs);

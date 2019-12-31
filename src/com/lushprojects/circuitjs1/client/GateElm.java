@@ -19,7 +19,9 @@
 
 package com.lushprojects.circuitjs1.client;
 
-    abstract class GateElm extends CircuitElm {
+import com.lushprojects.circuitjs1.client.gui.Options;
+
+abstract class GateElm extends CircuitElm {
 	final int FLAG_SMALL = 1;
 	final int FLAG_SCHMITT = 2;
 	int inputCount = 2;
@@ -38,7 +40,7 @@ package com.lushprojects.circuitjs1.client;
 	    if (lastSchmitt)
 		flags |= FLAG_SCHMITT;
 	    
-	    setSize(sim.topMenu != null && sim.topMenu.smallGridCheckItem.getState() ? 1 : 2);
+	    setSize(sim.options.get(Options.Type.SMALL_GRID) ? 1 : 2);
 	}
 	public GateElm(int xa, int ya, int xb, int yb, int f,
 			StringTokenizer st) {
@@ -107,7 +109,6 @@ package com.lushprojects.circuitjs1.client;
 	}
 
 	String getGateText() { return null; }
-	static boolean useEuroGates() { return sim.topMenu.euroGatesCheckItem.getState(); }
 	
 	void draw(Graphics g) {
 	    int i;
@@ -119,7 +120,7 @@ package com.lushprojects.circuitjs1.client;
 	    drawThickLine(g, lead2, point2);
 	    g.setColor(needsHighlight() ? selectColor : lightGrayColor);
 	    drawThickPolygon(g, gatePoly);
-	    if (useEuroGates()) {
+	    if (sim.options.get(Options.Type.EURO_GATES)) {
 		    Point center = interpPoint(point1, point2, .5);
 		    drawCenteredText(g, getGateText(), center.x, center.y-6*gsize, true);
 	    }
